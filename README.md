@@ -1,3 +1,3 @@
-Sorting Algorithm
-Just finished making random generated table xd
-50% done
+# Sorting Algorithm
+Just finished making random generated table\
+The only thing left to do is to make it actually sorting everything

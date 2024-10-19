@@ -1,4 +1,4 @@
-﻿#include <stdlib.h>
+#include <stdlib.h>
 #include <stdio.h>
 #include <time.h>
 
@@ -18,7 +18,7 @@ void table_generator() {
 	for (int i = 0; i < 40;) {
 		int x = rand() % 40 + 0;
 		if (a[39][x] == ' ') {
-			printf("%d ", x);
+			//printf("%d ", x); shows order in which columns were printed
 			for (int y = 39; y > height; y--) {
 				a[y][x] = 'X';
 			}
@@ -46,21 +46,55 @@ void show_table() {
 	}
 };
 
+//sorting algorithm
+void sort() {
+	int x = 39;
+
+	for (int i = 0; i < 40; i++) {// y
+		int count_row = 0;
+		for (int j = 0; j < 40; j++) {// x
+			if (a[i][j] == 'X') {
+				for (int z = 39; z > -1; z--) {
+					if (a[z][x] == 'X') {
+						count_row++;
+					}
+					else if (a[z][x] == ' ') {
+						break;
+					}
+				}
+				for (int n = 39; n > i-1; n--) {
+					a[n][x] = 'X';
+				}
+				for (int n = 0; n < (40-count_row); n++) {
+					a[n][j] = ' ';
+				}
+				//printf(" %d ", count_row);
+				break;
+			}
+		}
+		system("cls");
+ 		show_table();
+		Sleep(125);
+		x--;
+	}
+};
+
 int main() {
 	//random number generator
 	srand(time(NULL));
 
 	//generator loop
+	table_generator();
 	while (1) {
-		system("cls");
-
-		table_generator();
-		show_table();
-
 		//menu
-		printf("\n\n1 - generate again\n2 - exit\n= ");
+		system("cls");
+		show_table();
+		printf("\n\n1 - generate again\n2 - sort\n3 - exit\n= ");
 		int option = 0;
-		scanf_s("%d", &option);
-		if (option == 2) {break;} //exit the program
+		scanf_s("%d", &option); //exit the program
+		if (option == 1) { table_generator(); }
+		else if (option == 2) { sort(); }
+		else if (option == 3) { break; }
+		else { continue; }
 	}
 }
